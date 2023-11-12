@@ -3,13 +3,13 @@
 This is an implementation of whisper from scratch in C++.
 The related binaries are available on HuggingFace.
 
-This is a proof-of-concept. Further modifications, imporvements are coming.
+This is a proof-of-concept. Further modifications, improvements are coming.
 
 ## Available precompiled models
 
-### Whisper-tiny AMD64 AVX512
+### Whisper-tiny AMD64
 
-[Whisper tiny binaries](https://huggingface.co/anycores/whisper_tiny_v1.0-beta_amd64_avx512)
+[Whisper tiny binaries](https://huggingface.co/anycores/whisper_tiny_v1.1_intel)
 
 Binary contains:
 * exe for testing the app quickly
@@ -45,7 +45,6 @@ Tested on:
 
 Current properties:
 * fp32
-* avx512 is required
 
 ## Further Notes
 
