@@ -115,13 +115,14 @@ XG_API XGResult xg_get_output_data(
 	XgData** data
 );
 XG_API XGResult xg_set_input_data(
-	const XgGraph* graph,
-	const unsigned int input_idx,
-	const XgData* data
+    const XgGraph* graph,
+    const unsigned int input_idx,
+    const XgData* data
 );
 
 // helper functions
 XG_API bool xg_is_data_bool(const XgData* data);
+XG_API bool xg_is_data_string(const XgData* data);
 XG_API bool xg_is_data_uint8(const XgData* data);
 XG_API bool xg_is_data_uint16(const XgData* data);
 XG_API bool xg_is_data_uint32(const XgData* data);
@@ -134,5 +135,18 @@ XG_API bool xg_is_data_bfloat16(const XgData* data);
 XG_API bool xg_is_data_float16(const XgData* data);
 XG_API bool xg_is_data_float32(const XgData* data);
 XG_API bool xg_is_data_float64(const XgData* data);
+
+XG_API void xg_copy_stdstrings_to_data(
+    const std::vector<std::string>& ss,
+    XgData* data
+);
+XG_API void xg_copy_data_to_stdstrings(
+    const size_t length,  // number of strings
+    const XgData* data,
+    std::vector<std::string>& ss
+);
+XG_API size_t xg_get_num_of_strings(
+    const XgData* data
+);
 
 #endif  // __XG_RUNTIME_API__

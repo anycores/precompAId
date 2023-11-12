@@ -22,7 +22,6 @@ void test_whisper(const std::string& weight_path, const std::string& input_path)
 	xg_get_model_info(&minfo);
 	std::cout << minfo.model_name << " " << minfo.model_version << std::endl;
     
-	std::cout << "initing graph" << std::endl;
 	XgGraph* graph = nullptr;
 	if (xg_init_graph(weight_path, XGWeightSource::XG_ONNX, &graph) != XGResult::XG_SUCCESS)
 	{
@@ -46,7 +45,10 @@ void test_whisper(const std::string& weight_path, const std::string& input_path)
 	}
         
 	// load the data into XgData
-	reinterpret_cast<std::string*>(input_data->raw_data)[0] = input_path;
+	xg_copy_stdstrings_to_data(
+		std::vector<std::string>{input_path},
+		input_data
+	);
 
 	if (xg_set_input_data(graph, 0, input_data) != XGResult::XG_SUCCESS)
 	{
@@ -74,6 +76,13 @@ void test_whisper(const std::string& weight_path, const std::string& input_path)
 	}
 
 	// print output
-	std::string* o1 = reinterpret_cast<std::string*>(output_data->raw_data);
-	std::cout << o1[0] << std::endl;
+	std::vector<std::string> texts;
+	size_t num_texts = xg_get_num_of_strings(output_data);
+	xg_copy_data_to_stdstrings(num_texts, output_data, texts);
+	std::cout << texts[0] << std::endl;
+
+	// clean up
+	xg_destroy_data(&input_data);
+	xg_destroy_data(&output_data);
+	xg_destroy_graph(&graph);
 }
